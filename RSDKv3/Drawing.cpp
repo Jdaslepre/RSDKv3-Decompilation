@@ -377,7 +377,7 @@ int InitRenderDevice()
             Engine.frameBuffer2x = new ushort[GFX_LINESIZE_DOUBLE * (SCREEN_YSIZE * 2)];
             memset(Engine.frameBuffer2x, 0, GFX_LINESIZE_DOUBLE * (SCREEN_YSIZE * 2) * sizeof(ushort));
         }
-        
+
 #if RETRO_USING_OPENGL
         Engine.texBuffer   = new uint[SCREEN_XSIZE * SCREEN_YSIZE];
         Engine.texBuffer2x = new uint[(SCREEN_XSIZE * 2) * (SCREEN_YSIZE * 2)];
@@ -1012,6 +1012,18 @@ void FlipScreenVideo()
     glDisable(GL_BLEND);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, &gfxPolyListIndex);
 #endif
+
+    if (fadeMode > 0) {
+        ushort indices[] = { 0, 1, 2, 1, 3, 2 };
+        glDisable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glColor4f(0.0f, 0.0f, 0.0f, fadeMode / 255.0f);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+        glDisable(GL_BLEND);
+        glEnable(GL_TEXTURE_2D);
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    }
 }
 
 void ReleaseRenderDevice()
