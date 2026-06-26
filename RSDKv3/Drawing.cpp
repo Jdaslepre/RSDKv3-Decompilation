@@ -1011,7 +1011,6 @@ void FlipScreenVideo()
     glTexCoordPointer(2, GL_SHORT, sizeof(DrawVertex3D), &screenVerts[0].u);
     glDisable(GL_BLEND);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, &gfxPolyListIndex);
-#endif
 
     if (fadeMode > 0) {
         ushort indices[] = { 0, 1, 2, 1, 3, 2 };
@@ -1024,6 +1023,7 @@ void FlipScreenVideo()
         glEnable(GL_TEXTURE_2D);
         glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
+#endif
 }
 
 void ReleaseRenderDevice()
